@@ -1,0 +1,37 @@
+{
+    "name": "slim/slim-skeleton",
+    "description": "A Slim Framework skeleton application for rapid development",
+    "keywords": ["microframework","rest","router"],
+    "homepage": "http://github.com/codeguy/Slim-Skeleton",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josh Lockhart",
+            "email": "info@joshlockhart.com",
+            "homepage": "http://www.joshlockhart.com/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/tuupola/slim-fake-mcrypt.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "monolog/monolog": "~1.6",
+        "tuupola/slim-fake-mcrypt": "dev-master",
+        "slim/slim": "~2.3",
+        "slim/views": "0.*",
+        "twig/twig": "~1.13",
+        "ruflin/elastica": "v0.90.2.0",
+        "knplabs/github-api": "*"
+    },
+    "extra": {
+        "heroku": {
+            "framework": "slim",
+            "document-root": "public",
+            "index-document": "index.php"
+        }
+    }
+}

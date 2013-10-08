@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>{{ page_title }}</title>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="site-box">
+                <div class="hgroup">
+                    <h1 class="logo">{{ page_title }}</h1>
+                </div>
+
+                <div class="branches">
+                    {% for branch in branches %}
+                        <a data-branch="{{ branch.real_name }}" class="branch{% if branch.real_name == stable_branch %} stable-branch{% endif %}" href="#">{{ branch.name }}</a>
+                    {% endfor %}
+                </div>
+
+                <a href="/branches/">Refresh branches</a>
+
+                {% for payload in payloads if payload.isStable() %}
+                    {% if latest == false %}
+                        {% set latest = true %}
+                        <div class="cta-option">
+                            {% if payload.data('status') == 'passed' %}
+                                <a class="btn-download btn-download-alt" href="{{ payload.getDownloadUrl() }}">
+                                    <span class="version"><strong>Latest Stable</strong></span>
+                                </a>
+                            {% else %}
+                                Build #{{ payload.data(travis_identifier) }} failed
+                            {% endif %}
+
+                            <div class="txt-small txt-mute">
+                                {{ payload.data('committer_name') }} pushed <a href="https://github.com/{{ github_user }}/{{ github_repo }}/commit/{{ payload.data('commit') }}">{{ payload.getShortCommit() }} to {{ payload.data('branch') }}</a>
+                                <br />
+                                {{ payload.getCommittedAt() }}
+                            </div>
+                        </div>
+                        <hr />
+                    {% endif %}
+                {% endfor %}
+
+                {% for payload in payloads %}
+                    <div class="cta-option release branch-{{ payload.data('branch') }}">
+                        {% if payload.data('status') == 'passed' %}
+                            <a class="btn-download" href="{{ payload.getDownloadUrl() }}">
+                                <strong>Download</strong>
+                                <span class="version">#{{ payload.data(travis_identifier) }}</span>
+                            </a>
+                        {% else %}
+                            Build #{{ payload.data(travis_identifier) }} failed
+                        {% endif %}
+                        <div class="txt-small txt-mute">
+                            {{ payload.data('committer_name') }} pushed <a href="https://github.com/{{ github_user }}/{{ github_repo }}/commit/{{ payload.data('commit') }}">{{ payload.getShortCommit() }} to <span class="branch{% if payload.isStable() %} stable-branch{% endif %}{% if payload.isPullRequest() %} pull-request{% endif %}">{{ payload.data('branch') }}{% if payload.isPullRequest() %} from pull request{% endif %}</span></a>
+                            <br />
+                            {{ payload.getCommittedAt() }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="share-bar">
+                    <a class="read-more" href="https://github.com/{{ github_user }}/{{ github_repo }}">Read more &raquo;</a>
+
+                    <div class="share-opt">
+                        <a href="https://github.com/{{ github_user }}/{{ github_repo }}">
+                            <img src="github-logo.png" width="28" height="28" alt="GitHub">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="site-footer">
+                <p>Source code available only to developers on: <a href="https://github.com/{{ github_user }}/{{ github_repo }}">GitHub</a>.</p>
+            </div>
+        </div>
+
+        <script>
+            var branch = null;
+            var elements = document.querySelectorAll('.branches .branch');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function() {
+                    if (branch === null) {
+                        branch = this.getAttribute('data-branch');
+                        var releases = document.getElementsByClassName('release');
+                        for (var i = 0; i < releases.length; i++) {
+                            releases[i].style.display = "none";
+                        }
+
+                        var display_these = document.getElementsByClassName('branch-' + branch);
+                        for (var i = 0; i < display_these.length; i++) {
+                            display_these[i].style.display = "block";
+                        }
+                    } else {
+                        branch = null;
+                        var releases = document.getElementsByClassName('release');
+                        for (var i = 0; i < releases.length; i++) {
+                            releases[i].style.display = "block";
+                        }
+                    }
+
+                    return false;
+                });
+            }
+
+        </script>
+    </body>
+</html>
