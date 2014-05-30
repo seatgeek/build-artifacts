@@ -46,7 +46,7 @@ class Model implements JsonSerializable {
     $elasticaQuery->setSort(array(array('id' => array('order' => 'desc'))));
 
     $client = new Client(array('url' => ELASTICSEARCH_URL));
-    $elasticaIndex = $client->getIndex('artifacts');
+    $elasticaIndex = $this->_createIndex($client, 'artifacts');
     $elasticaResultSet = $elasticaIndex->search($elasticaQuery);
     $elasticaResults  = $elasticaResultSet->getResults();
     $totalResults = $elasticaResultSet->getTotalHits();
@@ -103,17 +103,10 @@ class Model implements JsonSerializable {
       }
     }
   }
-
+  
   public function save() {
     $client = new Client(array('url' => ELASTICSEARCH_URL));
-    $index = $client->getIndex('artifacts');
-    try {
-      $index->create();
-    } catch (ResponseException $e) {
-      if (strpos($e->getMessage(), 'IndexAlreadyExistsException') === false) {
-        throw $e;
-      }
-    }
+    $elasticaIndex = $this->_createIndex($client, 'artifacts');
     $type = $index->getType($this->type());
 
     $data = $this->_data;
@@ -147,6 +140,20 @@ class Model implements JsonSerializable {
     $this->hydrate(array('_id' => $result['_id']));
 
     return $result;
+  }
+
+  protected function _createIndex($client, $indexName) {
+    $client = new Client(array('url' => ELASTICSEARCH_URL));
+    $index = $client->getIndex($indexName);
+    try {
+      $index->create();
+    } catch (ResponseException $e) {
+      if (strpos($e->getMessage(), 'IndexAlreadyExistsException') === false) {
+        throw $e;
+      }
+    }
+    
+    return $index;
   }
 
 }
