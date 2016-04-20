@@ -42,8 +42,11 @@ class Model implements JsonSerializable {
 
     $elasticaQuery = new \Elastica\Query($elasticaBool);
     $elasticaQuery->setFrom($options['offset']);
-    $elasticaQuery->setLimit($options['limit']);
-    $elasticaQuery->setSort(array(array('id' => array('order' => 'desc'))));
+    $elasticaQuery->setSize($options['limit']);
+    $elasticaQuery->setSort(array(array('id' => array(
+      'order' => 'desc',
+      'unmapped_type' => 'long'
+    ))));
 
     $client = new Client(array('url' => ELASTICSEARCH_URL));
     $elasticaIndex = static::createIndex($client, 'artifacts');
@@ -148,7 +151,7 @@ class Model implements JsonSerializable {
     try {
       $index->create();
     } catch (ResponseException $e) {
-      if (strpos($e->getMessage(), 'IndexAlreadyExistsException') === false) {
+      if (strpos($e->getMessage(), 'already exists') === false) {
         throw $e;
       }
     }

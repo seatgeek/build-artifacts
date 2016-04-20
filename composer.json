@@ -17,7 +17,7 @@
         "slim/slim": "~2.3",
         "slim/views": "0.*",
         "twig/twig": "~1.13",
-        "ruflin/elastica": "2.3.1",
+        "ruflin/elastica": "3.1.1",
         "knplabs/github-api": "*",
         "josegonzalez/php-error-handlers": "0.0.5"
     },
