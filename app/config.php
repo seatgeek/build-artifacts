@@ -33,6 +33,9 @@ defineWithEnv('REDIS_URL', function($key) {
   return defaultFrom('REDISTOGO_URL', 'tcp://127.0.0.1:6379');
 });
 
+defineWithEnv('AIRBRAKE_API_KEY');
+defineWithEnv('AIRBRAKE_PROJECT_ID');
+
 defineWithEnv('CACHE_EXPIRATION', 500);
 defineWithEnv('DOWNLOAD_URL_TEMPLATE', "%s");
 defineWithEnv('GITHUB_TOKEN');
@@ -46,6 +49,21 @@ defineWithEnv('TRAVIS_IDENTIFIER', 'number');
 defineWithEnv('TRAVIS_TOKEN');
 
 date_default_timezone_set(TIMEZONE);
+
+// Create an array of configuration data to pass to the handler class
+$config = [
+    'handlers' => [
+        // *Can* be the class name, not-namespaced
+        // The namespace will be "interpolated" in such cases
+        'AirbrakeHandler' => [
+            'projectKey' => AIRBRAKE_API_KEY,
+            'projectId' => AIRBRAKE_PROJECT_ID,
+        ],
+    ],
+];
+
+// Register the error handler
+(new \Josegonzalez\ErrorHandlers\Handler($config))->register();
 
 // Prepare app
 $app = new \Slim\Slim(array(

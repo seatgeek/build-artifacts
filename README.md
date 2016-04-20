@@ -60,6 +60,7 @@ And clone our repository:
 
 Add the excellent [Redis To Go](http://redistogo.com/) and [Searchbox](http://www.searchbox.com/) heroku plugins:
 
+    heroku addons:create airbrake
     heroku addons:add redistogo
     heroku addons:add searchbox
 
