@@ -11,16 +11,9 @@
             "homepage": "http://www.joshlockhart.com/"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/tuupola/slim-fake-mcrypt.git"
-        }
-    ],
     "require": {
         "php": ">=5.3.0",
         "monolog/monolog": "~1.6",
-        "tuupola/slim-fake-mcrypt": "dev-master",
         "slim/slim": "~2.3",
         "slim/views": "0.*",
         "twig/twig": "~1.13",
