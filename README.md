@@ -58,10 +58,6 @@ And clone our repository:
     cd build-artifacts
     git remote add heroku git@heroku.com:ancient-foot-stomps-alligator.git
 
-Now we need to configure the buildpack. It has been tested against CHH's excellent [`heroku-buildpack-php` buildpack](https://github.com/CHH/heroku-buildpack-php).
-
-    heroku config:set BUILDPACK_URL=git://github.com/CHH/heroku-buildpack-php
-
 Add the excellent [Redis To Go](http://redistogo.com/) and [Searchbox](http://www.searchbox.com/) heroku plugins:
 
     heroku addons:add redistogo
@@ -104,7 +100,6 @@ Any subsequent pushes will create entries in your build-artifacts web panel.
 
 The following are environment variables that can be set for the application:
 
-- `BUILDPACK_URL`:         Buildpack to be used
 - `CACHE_EXPIRATION`:      Redis cache expiration in seconds
 - `DOWNLOAD_URL_TEMPLATE`: Template to use for displaying artifact download urls
 - `ELASTICSEARCH_URL`:     Url to use to connect to elasticsearch over http. If not set, it can fallback to `SEARCHBOX_URL`
