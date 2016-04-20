@@ -46,7 +46,7 @@ class Model implements JsonSerializable {
     $elasticaQuery->setSort(array(array('id' => array('order' => 'desc'))));
 
     $client = new Client(array('url' => ELASTICSEARCH_URL));
-    $elasticaIndex = $this->_createIndex($client, 'artifacts');
+    $elasticaIndex = static::createIndex($client, 'artifacts');
     $elasticaResultSet = $elasticaIndex->search($elasticaQuery);
     $elasticaResults  = $elasticaResultSet->getResults();
     $totalResults = $elasticaResultSet->getTotalHits();
@@ -103,10 +103,10 @@ class Model implements JsonSerializable {
       }
     }
   }
-  
+
   public function save() {
     $client = new Client(array('url' => ELASTICSEARCH_URL));
-    $elasticaIndex = $this->_createIndex($client, 'artifacts');
+    $elasticaIndex = static::_createIndex($client, 'artifacts');
     $type = $index->getType($this->type());
 
     $data = $this->_data;
@@ -142,7 +142,7 @@ class Model implements JsonSerializable {
     return $result;
   }
 
-  protected function _createIndex($client, $indexName) {
+  protected static function createIndex($client, $indexName) {
     $client = new Client(array('url' => ELASTICSEARCH_URL));
     $index = $client->getIndex($indexName);
     try {
@@ -152,7 +152,7 @@ class Model implements JsonSerializable {
         throw $e;
       }
     }
-    
+
     return $index;
   }
 
