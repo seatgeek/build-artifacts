@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b1061094215d3a3a85705775821fd492",
-    "content-hash": "c9587d7bc535cdc3753787ff56af0d92",
+    "hash": "958702932b30dc978da909292b6e6ef6",
+    "content-hash": "fec9931d8fc569dca359f4660f434d44",
     "packages": [
         {
             "name": "guzzle/guzzle",
@@ -282,45 +282,46 @@
         },
         {
             "name": "ruflin/elastica",
-            "version": "v0.90.2.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ruflin/Elastica.git",
-                "reference": "7157cfbf7537d2afdf5aa63b1c4a092818ee355a"
+                "reference": "0df1d7b513960ba11d3075652dcd71fcab8dd37a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ruflin/Elastica/zipball/7157cfbf7537d2afdf5aa63b1c4a092818ee355a",
-                "reference": "7157cfbf7537d2afdf5aa63b1c4a092818ee355a",
+                "url": "https://api.github.com/repos/ruflin/Elastica/zipball/0df1d7b513960ba11d3075652dcd71fcab8dd37a",
+                "reference": "0df1d7b513960ba11d3075652dcd71fcab8dd37a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "munkie/elasticsearch-thrift-php": "1.4.*",
+                "php": ">=5.3.3",
                 "psr/log": "~1.0"
             },
+            "require-dev": {
+                "guzzlehttp/guzzle": "5.3.*",
+                "munkie/elasticsearch-thrift-php": "1.4.*"
+            },
             "suggest": {
+                "egeloen/http-adapter": "Allow using httpadapter transport",
+                "guzzlehttp/guzzle": "Allow using guzzle 5.3.x as the http transport (Requires php 5.4)",
                 "monolog/monolog": "Logging request",
-                "munkie/elasticsearch-thrift-php": "Allow using thrift transport",
-                "psr/log": "for logging"
+                "munkie/elasticsearch-thrift-php": "Allow using thrift transport"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.20.5.x-dev"
+                    "dev-master": "2.2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Elastica": "lib/",
-                    "Elastica\\Test": "test/lib/"
+                "psr-4": {
+                    "Elastica\\": "lib/Elastica/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache 2.0"
+                "MIT"
             ],
             "authors": [
                 {
@@ -329,12 +330,12 @@
                 }
             ],
             "description": "Elasticsearch Client",
-            "homepage": "http://ruflin.github.com/Elastica/",
+            "homepage": "http://elastica.io/",
             "keywords": [
                 "client",
                 "search"
             ],
-            "time": "2013-08-25 08:45:21"
+            "time": "2015-10-19 07:09:10"
         },
         {
             "name": "slim/slim",

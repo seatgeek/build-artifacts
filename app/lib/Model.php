@@ -35,9 +35,9 @@ class Model implements JsonSerializable {
       'limit' => 25,
     ), (array)$options);
 
-    $elasticaText = new \Elastica\Query\Text();
-    $elasticaText->setField('_model', get_called_class());
-    $elasticaBool = new \Elastica\Query\Bool();
+    $elasticaText = new \Elastica\Query\Term();
+    $elasticaText->setTerm('_model', get_called_class());
+    $elasticaBool = new \Elastica\Query\BoolQuery();
     $elasticaBool->addShould($elasticaText);
 
     $elasticaQuery = new \Elastica\Query($elasticaBool);
